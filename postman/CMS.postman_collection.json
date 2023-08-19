@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "8bfd4359-406c-4d8f-885f-37f5dbc620f8",
+		"name": "CMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16002975"
+	},
+	"item": [
+		{
+			"name": "token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var token = responseBody;\r",
+							"postman.setEnvironmentVariable(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server-ip}}:{{port}}/token",
+					"host": [
+						"{{server-ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Page",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"parent_id\": 1,\r\n    \"slug\": \"new-page\",\r\n    \"title\": \"New Page\",\r\n    \"content\": \"This is a new page content.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server-ip}}:{{port}}/pages",
+					"host": [
+						"{{server-ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"pages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server-ip}}:{{port}}/pages",
+					"host": [
+						"{{server-ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"pages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pages by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server-ip}}:{{port}}/pages/1",
+					"host": [
+						"{{server-ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"pages",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Page",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"parent_id\": 1,\r\n    \"slug\": \"new-page-2\",\r\n    \"title\": \"Updated Page Title 2\",\r\n    \"content\": \"This is the updated page content. 2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server-ip}}:{{port}}/pages/2",
+					"host": [
+						"{{server-ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"pages",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Page",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{server-ip}}:{{port}}/pages/2",
+					"host": [
+						"{{server-ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"pages",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
