@@ -31,16 +31,20 @@ A simple Laravel-based CRUD (Create, Read, Update, Delete) API for managing page
     DB_USERNAME=your_db_username
     DB_PASSWORD=your_db_password
 
-5. Generate key
+5. Composer Install 
+    ```bash
+    composer install
+
+6. Generate key
     - php artisan key:generate
 
-6. Run migrations
+7. Run migrations
     - php artisan migrate
 
-7. Start the Backend
+8. Start the Backend
     - php artisan serve
 
-8. The API will be available at http://127.0.0.1:8000.
+9. The API will be available at http://127.0.0.1:8000.
 
 ## API Endpoints
 1. **GET**    /token - Generate token to execute the apis.
