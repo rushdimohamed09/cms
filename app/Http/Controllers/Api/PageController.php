@@ -24,6 +24,67 @@ class PageController extends Controller
         return response()->json($page);
     }
 
+    public function getPages(Request $request) {
+        $limit = $request->input('limit', 10); // Default limit is 10 if not provided
+        $offset = $request->input('offset', 0); // Default offset is 0 if not provided
+
+        $pages = Page::skip($offset)->take($limit)->get();
+        $pageCount = Page::count();
+
+        // Modify the pages to include the link
+        foreach ($pages as &$page) {
+            $link = $page->slug;
+            $parentId = $page->parent_id;
+
+            // Iterate up the hierarchy to build the link
+            while (!is_null($parentId)) {
+                $parent = Page::find($parentId);
+                if (!$parent) {
+                    break;
+                }
+                $link = $parent->slug . '/' . $link;
+                $parentId = $parent->parent_id;
+            }
+
+            $page->link = $link;
+        }
+
+        return response()->json([
+            'data' => $pages,
+            'count' => $pageCount,
+        ]);
+        return response()->json($pages);
+    }
+
+    public function getContentByLink(Request $request) {
+        $link = $request->query('link');
+
+        if (!$link) {
+            return response()->json(['error' => 'Link parameter is missing'], 400);
+        }
+
+        $slugs = explode('/', $link);
+
+        $parentId = null;
+
+        $pages = Page::all();
+        $data = $pages->toArray();
+
+        foreach ($slugs as $slug) {
+            $matchingSlug = collect($data)->first(function ($item) use ($slug, $parentId) {
+                return $item['slug'] === $slug && $item['parent_id'] === $parentId;
+            });
+
+            if (!$matchingSlug) {
+                return response()->json(['error' => 'Content not found'], 404);
+            }
+
+            $parentId = $matchingSlug['id'];
+        }
+
+        return response()->json(['content' => $matchingSlug]);
+    }
+
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
             'slug' => 'required',

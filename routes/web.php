@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PageController;
+use App\Http\Middleware\Cors;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,19 +16,22 @@ use App\Http\Controllers\Api\PageController;
 */
 
 //Generate the token
-Route::get('/token', function () { return csrf_token(); });
+Route::get('/token', function () { return csrf_token(); })->middleware(Cors::class);
 
 //Get All pages
-Route::get('/pages', [PageController::class, 'index']);
+Route::get('/pages', [PageController::class, 'getPages'])->middleware(Cors::class);
 
 //Get page by id
-Route::get('/pages/{id}', [PageController::class, 'show']);
+Route::get('/pages/{id}', [PageController::class, 'show'])->middleware(Cors::class);
+
+//Get page by link
+Route::get('/content', [PageController::class, 'getContentByLink'])->middleware(Cors::class);
 
 //Add new page
-Route::post('/pages', [PageController::class, 'store']);
+Route::post('/pages', [PageController::class, 'store'])->middleware(Cors::class);
 
 //update page by id 
-Route::put('/pages/{id}', [PageController::class, 'update']);
+Route::put('/pages/{id}', [PageController::class, 'update'])->middleware(Cors::class);
 
 //delete a page by id
-Route::delete('/pages/{id}', [PageController::class, 'destroy']);
+Route::delete('/pages/{id}', [PageController::class, 'destroy'])->middleware(Cors::class);

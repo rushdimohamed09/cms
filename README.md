@@ -20,19 +20,27 @@ A simple Laravel-based CRUD (Create, Read, Update, Delete) API for managing page
 
 2. cd cms
 
-3. cp .env.example .env
-    - Change database configurations on .env 
+3. log to you database and create a database
+    ```bash
+   create database cms;
 
-4. Generate key
+4. cp .env.example .env
+    - Change database configurations on .env 
+    ```bash
+    DB_DATABASE=your_db_name
+    DB_USERNAME=your_db_username
+    DB_PASSWORD=your_db_password
+
+5. Generate key
     - php artisan key:generate
 
-5. Run migrations
+6. Run migrations
     - php artisan migrate
 
-6. Start the Backend
+7. Start the Backend
     - php artisan serve
 
-7. The API will be available at http://127.0.0.1:8000.
+8. The API will be available at http://127.0.0.1:8000.
 
 ## API Endpoints
 1. **GET**    /token - Generate token to execute the apis.
