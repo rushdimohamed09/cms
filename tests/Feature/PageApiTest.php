@@ -29,7 +29,7 @@ class PageApiTest extends TestCase
         $response->assertStatus(200);
 
         // Assert that the response JSON count
-        $response->assertJsonCount(0, $response->json());
+        $response->assertJsonCount(0, 'data');
     }
 
     public function testGetPageById() {
